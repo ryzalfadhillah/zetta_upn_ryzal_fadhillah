@@ -19,6 +19,9 @@ const bookPurchasing = (detail, discount = 0, tax = 0, stock = 0, quantityBook =
         const priceAfterDiscount = (amountOfPurchasedBook * detail.price) - amountOfdiscount; //Perhitungan harga setelah diskon
         const amountOfTax =  priceAfterDiscount * (tax / 100); //Perhitungan pajak
         const priceAfterTax = priceAfterDiscount + amountOfTax; //Perhitungan harga setelah pajak
+        result = priceAfterTax;
+        console.log("------------------------------------------------------");
+        console.log("\t\t    BOOK PURCHASING");
         console.log("------------------------------------------------------");
         console.log(`Book Title\t\t: ${detail.title}`);
         console.log(`Quantity\t\t: ${quantityBook}`);
@@ -36,9 +39,22 @@ const bookPurchasing = (detail, discount = 0, tax = 0, stock = 0, quantityBook =
             console.log(`stock left\t\t: ${stock - amountOfPurchasedBook}`);
             console.log("Stock is sold out, you can't order again");
         }
-        console.log("------------------------------------------------------\n\n");
+        console.log("------------------------------------------------------");
     }
     return result;
+}
+
+function credits(result, month){
+    console.log(`Simulasi kredit selama ${month} bulan : `);
+    console.log(result);
+    const credit = Math.round(result / month);
+    const pembayaran = [];
+    for(let i = 0; i < month; i++){
+        pembayaran.push(credit);
+        console.log(`Bulan ke-${i+1}\t\t: Rp.${pembayaran[i]}`);
+    }
+    console.log("------------------------------------------------------\n\n");
+    return pembayaran;
 }
 
 //Array daftar buku
@@ -66,5 +82,6 @@ const book = books.map(book => {
     const tax = Math.floor(Math.random() * 10) + 1; //Generate pajak dari 1 sampai 10
     const stock = Math.floor(Math.random() * 100);
     const quantity = Math.floor(Math.random() * 100);
-    bookPurchasing(book, discount, tax, stock, quantity); //Pemanggilan fungction
+    const month = Math.floor(Math.random() * 12 + 1);
+    credits(bookPurchasing(book, discount, tax, stock, quantity), month) //Pemanggilan fungction
 })
